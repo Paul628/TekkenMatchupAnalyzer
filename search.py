@@ -2,6 +2,8 @@ import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 
+url = 'https://wank.wavu.wiki/player/4q2qJBFmR8rJ'
+
 
 def iniciarbs4(url):
     response = requests.get(url)
@@ -28,7 +30,7 @@ def replaytable(url):
     if replay_table:
         rows = replay_table.find_all('tr')[1:]  # Skip the header row
         data = [[td.text.strip() for td in row.find_all('td')] for row in rows]
-        df = pd.DataFrame(data, columns=['When', 'Score', 'Rating', 'Opponent', 'Opp. char', 'Opp. rating'])
+        df = pd.DataFrame(data, columns=['When','Char', 'Score', 'Rating', 'Opponent', 'Opp. char', 'Opp. rating'])
         df['Win'] = df['Score'].str.contains('WIN').astype(int)  # Convert boolean to int
         df['Loss'] = df['Score'].str.contains('LOSE').astype(int)
 
